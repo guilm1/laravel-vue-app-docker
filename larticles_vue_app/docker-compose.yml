@@ -1,0 +1,91 @@
+version: '3'
+
+services:
+  laravel-app:
+    build: .
+    ports: 
+      - "8080:80"
+    volumes: 
+      - ./:/usr/share/nginx
+    networks:
+      - app-network
+  mysql-app:
+    image: mysql:5.7.22
+    ports: 
+      - "3306:3306"
+    volumes: 
+      - .docker/dbdata:/var/lib/mysql
+    environment: 
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: laravel
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
+
+# version: '3'
+# services:
+
+#   #PHP Service
+#   app:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     image: digitalocean.com/php
+#     container_name: app
+#     restart: unless-stopped
+#     tty: true
+#     environment:
+#       SERVICE_NAME: app
+#       SERVICE_TAGS: dev
+#     working_dir: /var/www/html
+#     volumes:
+#       - ./:/var/www
+#       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+#     networks:
+#       - app-network
+
+#   #Nginx Service
+#   webserver:
+#     image: nginx:alpine
+#     container_name: webserver
+#     restart: unless-stopped
+#     tty: true
+#     ports:
+#       - "80:80"
+#       - "443:443"
+#     volumes:
+#       - ./:/var/www/html
+#       - ./nginx/conf.d/:/etc/nginx/conf.d/
+#     networks:
+#       - app-network
+
+#   #MySQL Service
+#   db:
+#     image: mysql:5.7.22
+#     container_name: db
+#     restart: unless-stopped
+#     tty: true
+#     ports:
+#       - "3306:3306"
+#     environment:
+#       MYSQL_DATABASE: bancolocal
+#       MYSQL_ROOT_PASSWORD: 14141516@
+#       SERVICE_TAGS: dev
+#       SERVICE_NAME: mysql
+#     volumes:
+#       - dbdata:/var/lib/mysql
+#       - ./mysql/my.cnf:/etc/mysql/my.cnf
+#     networks:
+#       - app-network
+
+# #Docker Networks
+# networks:
+#   app-network:
+#     driver: bridge
+
+# #Volumes
+# volumes:
+#   dbdata:
+#     driver: local
