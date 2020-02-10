@@ -34,3 +34,6 @@ Créditos:
 https://www.digitalocean.com/community/questions/enabling-nginx-mod_rewrite
 
 COLOCAR .docker no gitignore
+
+
+Avaliar necessidade do volume .docker/.dbdata
