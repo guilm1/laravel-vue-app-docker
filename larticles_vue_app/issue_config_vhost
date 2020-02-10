@@ -1,0 +1,34 @@
+Dentro do container que contém sua aplicação Laravel, abra em um editor o arquivo: /etc/nginx/cond.f/default.conf
+
+
+Procure pelo seguinte trecho:
+location / {
+        # First attempt to serve request as file, then
+        # as directory, then fall back to index.html
+        try_files $uri $uri/ =404;
+    }
+
+
+Substitua pelo seguinte trecho:
+
+
+location / {
+        # First attempt to serve request as file, then
+        # as directory, then fall back to index.html
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+
+Salve o arquivo, reinicie o nginx com o seguinte comando:
+service nginx reload
+
+
+Eu diria que é uma solução paliativa, pois se você remover o container (docker-compose down), quando subir ele novamente (docker-compose up -d), será preciso fazer essa alteração novamente.
+
+
+Espero ter ajudado.
+Abraços.
+
+
+Créditos:
+https://www.digitalocean.com/community/questions/enabling-nginx-mod_rewrite
